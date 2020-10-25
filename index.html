@@ -26,7 +26,7 @@
 
   <div class="container">
     <div class="row">
-      <aside class="col-4 bg-light">
+      <aside class="col-4 bg-light mt-3">
       <!--search bar goes here-->
         <div class="input-group mb-3">
           <input type="text" class="form-control search-city"   placeholder="Search City" aria-label="search" aria-describedby="basic-addon2">
@@ -38,13 +38,13 @@
         </div>
 
         <!--the previous cities searched, as buttons, with maybe an onclick event to bring those cities back?tbd on that. might have to make row/col divs for each button...will play with later...or they might not be buttons at all-->
-        <div class="btn-group prev-cities" role="group">
-          <button class="btn btn-outline-info btn-block">prev city</button>
+        <div class="col card border border-info rounded">
+          <div class="card-body">previous city</div>
         </div>
       </aside>
 
     <div class="col-8">
-      <main class="row">
+      <main class="row border border-info">
         <div class="col">
           <div class="current-city"></div>
           <div class="current-temp"></div>
@@ -53,16 +53,30 @@
           <div class="current-uv"></div>
        </div>
       </main>
-      <section class="row">
-        <div class="col">
-        the future date cards go here
-      </div>
+      <section class="row card-holder">
+        <div class="col card p-0">
+          <div class="card-body day-one">a</div>
+        </div>
+        <div class="col card">
+          <div class="card-body day-two">b</div>
+        </div>
+        <div class="col card">
+          <div class="card-body day-three">c</div>
+        </div>
+        <div class="col card">
+          <div class="card-body day-four">d</div>
+        </div>
+        <div class="col card">
+          <div class="card-body day-five">e</div>
+        </div>
+      
       </section>
     </div>
 
   </div>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
