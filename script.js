@@ -23,14 +23,21 @@ function searchCity(){
        console.log(response);
        let results = response.main
        //city (date) + icon
-       let cityName = reponse.name
-       let cityIcon = response.weather[0].icon
+       let cityName = response.name
+       //let cityIcon = response.weather[0].icon
+
+       //add city name as header with date & icon
+       $(".current-city").html(`<h3> ${cityName} date icon </h3>`)
+
        //temp
-       let cityTemp = (results.temp - 273.15) * 1.8 + 32
+       let cityTemp = ((results.temp - 273.15) * 1.8 + 32).toFixed(1)
+       $(".current-temp").text(`Temperature: ${cityTemp} **F`)
        //humidity
        let cityHumidity = results.humidity
+       $(".current-humidity").text(`Humidity: ${cityHumidity}%`)
        //wind speed
        let cityWind = response.wind.speed
+       $(".current-wind").text(`Wind Speed: ${cityWind} mph`)
        //uv index...can't locate?
 
        //5-day forecast
