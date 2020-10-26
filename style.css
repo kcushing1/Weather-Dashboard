@@ -1,0 +1,19 @@
+.low-uv {
+  background-color: rgba(0,255,0,0.3);
+}
+
+.mod-uv {
+  background-color: rgba(255,255,0,0.3);
+}
+
+.high-uv {
+  background-color: rgba(255,165,0,0.3);
+}
+
+.very-high-uv {
+  background-color: rgba(255,0,0,0.3);
+}
+
+.extreme-uv {
+  background-color: rgba(238,130,238);
+}
