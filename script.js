@@ -13,7 +13,9 @@ function searchCity(){
      let city = $(".search-city").val()
      let queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+ city + "&units=imperial&appid=349bd553f59e26c071b517009066832a";
      let forecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city +"&unites=imperial&appid=349bd553f59e26c071b517009066832a";
-     let today = moment().format("LL")
+     let todayLong = moment().format("LL")
+     let todayShort = moment().format("l")
+     let today = moment()
 
      console.log(city)
 
@@ -27,7 +29,7 @@ function searchCity(){
        let cityName = response.name
        //let cityIcon = response.weather[0].icon
        //add city name as header with date & icon
-       $(".current-city").html(`<h3> ${cityName} ${today} icon </h3>`)
+       $(".current-city").html(`<h3> ${cityName} ${todayLong} icon </h3>`)
 
        //add temp 
        let cityTemp = results.temp
@@ -55,13 +57,36 @@ function searchCity(){
         //need to check time for 12:00:00 in str
         //future.list[i].dt_txt is 
         //str "2020-10-27 12:00:00
-        let dayOne = future.list[6]
-        let dayTwo = future.list[14]
-        let dayThree = future.list[3]
-        let dayFour = future.list[4]
-        let dayFive = future.list[5]
+        let futureArray = []
+        
+        getNoontime()
 
-        //date ... add moment.js
+        //take only the days at noontime to ensure no repeat days
+        function getNoontime(){
+          for (let i=0; i<future.list.length; i++){
+            let checkFutureTime = future.list[i].dt_txt
+            let noontime = "12:00:00"
+
+            //if the time is noon and the day is not today
+            //add that i to futureArray
+            if (checkFutureTime.includes(noontime) && checkFutureTime !== today()){
+              console.log("checkfuturetime is connected")
+              futureArray.push(i)
+            }
+          }
+          console.log(futureArray)
+        }
+
+        addForecastCards()
+
+        function addForecastCards(){
+          for (let j=0; j<futureArray; j++){
+           let forecastDay = future.list[j]
+           let 
+          }
+        }
+
+        
         //icon .weather[0].main = "clouds"
         //if statement for chosing icon?
         //Clouds, Rain
@@ -69,10 +94,10 @@ function searchCity(){
         //humidity .main.humidity
 
         //add to each card
-        $(".day-one").html(`<h5 class="card-title"> ${today} </h5>
-        <p>icon</p>
-        <p>temp</p>
-        <p>wind</p>`)     
+        //$(".day-one").html(`<h5 class="card-title"> ${todayShort} </h5>
+        //<p>icon</p>
+        //<p>temp</p>
+        //<p>wind</p>`)     
 
      //prev cities searched
      //log as buttons
