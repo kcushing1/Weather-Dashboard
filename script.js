@@ -33,7 +33,7 @@ function searchCity(){
        //add temp 
        let cityTemp = results.temp
        //((results.temp - 273.15) * 1.8 + 32).toFixed(1)
-       $(".current-temp").text(`Temperature: ${cityTemp} **F`)
+       $(".current-temp").text(`Temperature: ${cityTemp} ˚F`)
        // add humidity
        let cityHumidity = results.humidity
        $(".current-humidity").text(`Humidity: ${cityHumidity}%`)
@@ -79,29 +79,35 @@ function searchCity(){
         addForecastCards()
 
         function addForecastCards(){
-          for (let j=0; j<futureArray.length; j++){
-           let forecastDay = future.list[j]
-           let displayForecastDate = moment(forecastDay.dt_txt).format("l")
-           //icon
-           let displayForecastTemp = future.list[j].main.temp
-           let displayForecastHumidity = future.list[j].main.humidity
+          let tomorrow = moment().add(1,"day")
 
-           console.log("forloop j is connected")
+          //create forecast card for each day
+          for (let j=0; j<futureArray.length; j++){
+           //icon
+           let displayForecastTemp = future.list[j].main.temp.toFixed(1)
+           let displayForecastHumidity = future.list[j].main.humidity
           
+           //create the card with title, icon, temp, hum.
            $(".card-holder").append(`
             <div class="col card">
-              <div class="card-body">
-                <h6 class="card-title"> ${displayForecastDate} </h6>
+              <div class="card-body p-0">
+                <h6 class="card-title">${tomorrow.format("l")}</h6>
                 <p> icon </p>
-                <p> ${displayForecastTemp} *F</p>
-                <p> ${displayForecastHumidity}% </p>
+                <p> ${displayForecastTemp} ˚F</p>
+                <p> Hum. ${displayForecastHumidity}% </p>
               </div>
             </div>
-           `)
-           console.log(".card-holder is connected")
+           `);
+
+            //add a day to the display date on next card
+            tomorrow.add(1,"day")
           }
           console.log("addforecastcards is connected")
         }
+
+        //for moment loop start tomorrow, add i day, append 
+       
+        
         
         //icon .weather[0].main = "clouds"
         //if statement for chosing icon?
