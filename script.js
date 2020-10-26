@@ -12,9 +12,8 @@ function searchCity(){
      //queryURL template for OpenWeather API
      let city = $(".search-city").val()
      let queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+ city + "&units=imperial&appid=349bd553f59e26c071b517009066832a";
-     let forecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city +"&unites=imperial&appid=349bd553f59e26c071b517009066832a";
+     let forecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city +"&units=imperial&appid=349bd553f59e26c071b517009066832a";
      let todayLong = moment().format("LL")
-     let todayShort = moment().format("l")
      let today = moment()
 
      console.log(city)
@@ -69,7 +68,7 @@ function searchCity(){
 
             //if the time is noon and the day is not today
             //add that i to futureArray
-            if (checkFutureTime.includes(noontime) && checkFutureTime !== today()){
+            if (checkFutureTime.includes(noontime) && checkFutureTime !== today){
               console.log("checkfuturetime is connected")
               futureArray.push(i)
             }
@@ -80,27 +79,37 @@ function searchCity(){
         addForecastCards()
 
         function addForecastCards(){
-          for (let j=0; j<futureArray; j++){
+          for (let j=0; j<futureArray.length; j++){
            let forecastDay = future.list[j]
-           let 
-          }
-        }
+           let displayForecastDate = moment(forecastDay.dt_txt).format("l")
+           //icon
+           let displayForecastTemp = future.list[j].main.temp
+           let displayForecastHumidity = future.list[j].main.humidity
 
+           console.log("forloop j is connected")
+          
+           $(".card-holder").append(`
+            <div class="col card">
+              <div class="card-body">
+                <h6 class="card-title"> ${displayForecastDate} </h6>
+                <p> icon </p>
+                <p> ${displayForecastTemp} *F</p>
+                <p> ${displayForecastHumidity}% </p>
+              </div>
+            </div>
+           `)
+           console.log(".card-holder is connected")
+          }
+          console.log("addforecastcards is connected")
+        }
         
         //icon .weather[0].main = "clouds"
         //if statement for chosing icon?
         //Clouds, Rain
-        //temp .main.temp
-        //humidity .main.humidity
-
-        //add to each card
-        //$(".day-one").html(`<h5 class="card-title"> ${todayShort} </h5>
-        //<p>icon</p>
-        //<p>temp</p>
-        //<p>wind</p>`)     
+         
 
      //prev cities searched
-     //log as buttons
+     //log as buttons? cards?
       }) //end forecast ajax
      } //end cityForecast()
      
