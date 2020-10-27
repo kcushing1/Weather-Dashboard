@@ -38,10 +38,13 @@ function searchCity(){
        console.log(response);
        let results = response.main
        let cityName = response.name
-       //let cityIcon = response.weather[0].icon
+       let cityIcon = response.weather[0].icon
+       let cityIconURL = "http://openweathermap.org/img/wn/"+ cityIcon +"@2x.png"
 
        //add city name as header with date & icon
-       $(".current-city").html(`<h3> ${cityName} - ${todayLong} icon </h3>`)
+       $(".current-city").html(`<h3> ${cityName} - ${todayLong} 
+       <img id="icon" alt="Weather Icon" src=${cityIconURL}>
+       </h3>`)
 
        //add temp 
        let cityTemp = results.temp.toFixed(1)
@@ -135,13 +138,15 @@ function searchCity(){
            //icon
            let displayForecastTemp = future.list[j].main.temp.toFixed(1)
            let displayForecastHumidity = future.list[j].main.humidity
+           let forecastIcon = future.list[j].weather[0].icon
+           let forecastIconURL = "http://openweathermap.org/img/wn/"+ forecastIcon +".png"
           
            //create the card with title, icon, temp, hum.
            $(".forecast-cards").append(`
             <div class="col card rounded">
               <div class="card-body p-0">
                 <h6 class="card-title">${tomorrow.format("l")}</h6>
-                <p> icon </p>
+                <img class="icon" alt="Weather Icon" src=${forecastIconURL}>
                 <p> ${displayForecastTemp} ˚F</p>
                 <p> Hum. ${displayForecastHumidity}% </p>
               </div>
