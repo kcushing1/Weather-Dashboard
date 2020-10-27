@@ -1,4 +1,5 @@
 //vars to define can go here
+let listSearchCities = []
 
 //click event listener for search button
 $(".search-btn").on("click", searchCity)
@@ -7,9 +8,13 @@ $(".search-btn").on("click", searchCity)
 //requesting the city info from OpenWeather API
 function searchCity(){
 
-  //clear card
+  //remove welcome card and show city card
+    $(".city-card").removeClass("hidden")
+    $(".welcome-card").addClass("hidden")
+ 
+    //clear card
+    removeForecastCards()
 
-     //send for OpenWeather API for today's weather
      let city = $(".search-city").val()
      let queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+ city + "&units=imperial&appid=349bd553f59e26c071b517009066832a";
      let forecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city +"&units=imperial&appid=349bd553f59e26c071b517009066832a";
@@ -17,6 +22,15 @@ function searchCity(){
      let todayLong = moment().format("LL")
      let today = moment()
 
+     //add newly searched city to list for storage
+     listSearchCities.push(city)
+
+     //limit the previous search list to 5 cities
+     if (listSearchCities.length > 5){
+       listSearchCities.splice(0)
+     }
+
+     //present weather request
      $.ajax({
        url: queryURL,
        method: "GET"
@@ -58,7 +72,7 @@ function searchCity(){
             </p>`)
             colorUVIndex()
 
-            //indicate index severity
+            //indicate index severity by color
             function colorUVIndex(){
               if (uvIndex < 3){
                 $(".uv").addClass("low-uv")
@@ -123,7 +137,7 @@ function searchCity(){
            let displayForecastHumidity = future.list[j].main.humidity
           
            //create the card with title, icon, temp, hum.
-           $(".card-holder").append(`
+           $(".forecast-cards").append(`
             <div class="col card rounded">
               <div class="card-body p-0">
                 <h6 class="card-title">${tomorrow.format("l")}</h6>
@@ -143,16 +157,34 @@ function searchCity(){
         //icon .weather[0].main = "clouds"
         //if statement for chosing icon?
         //Clouds, Rain
-         
-
-     //prev cities searched
-     //log as buttons? cards?
+    
       }) //end forecast ajax
-     } //end cityForecast()    
+     } //end cityForecast()  
+     
+     function removeForecastCards(){
+       $(".forecast-cards").empty()
+     }
 
+  savePreviousCities()
+//save cities to localstorage
+function savePreviousCities(){
+  for (let k=0; k< listSearchCities.length; k++){
+    localStorage.setItem("searchCity"+k, listSearchCities[k])
+  }
+}
+
+  $(".search-city").val("")
   console.log("search btn connected")
 }//end search btn
 
+
+listPreviousCities()
+//post the city to the previously searched list aside
+function listPreviousCities(){
+  for (let k=0; k< listSearchCities.length; k++){
+    $(".prev-city"+k).text(localStorage.getItem("searchCity"+k))
+  }
+}
 
 //prev-city search click event...maybe?
 //add event, in function(){

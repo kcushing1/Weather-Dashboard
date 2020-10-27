@@ -39,13 +39,19 @@
         </div>
 
         <!--the previous cities searched, as buttons, with maybe an onclick event to bring those cities back?tbd on that. might have to make row/col divs for each button...will play with later...or they might not be buttons at all-->
-        <div class="col card border border-info rounded">
-          <div class="card-body">previous city</div>
+        <div class="col rounded city-list card border border-info">
+          <div class="card-body">
+            <p class="prev-city-0"></p>
+          </div>
+          <div class="card-body prev-city-1"></div>
+          <div class="card-body prev-city-2"></div>
+          <div class="card-body prev-city-3"></div>
+          <div class="card-body prev-city-4"></div>
         </div>
       </aside>
 
     <div class="col-9">
-      <main class="row border border-info rounded">
+      <main class="row border border-info city-card rounded hidden">
         <div class="col">
           <div class="current-city"></div>
           <div class="current-temp"></div>
@@ -56,9 +62,14 @@
       </main>
 
       <!--the 5 day forecast cards go here-->
-      <section class="row card-holder">
-      
-      </section>
+      <section class="row card-holder forecast-cards"></section>
+
+      <div class="row card-holder border-info border rounded welcome-card text-center">
+        <div class="card-body">
+          <h4>Search the weather in your favorite city!</h4>
+        </div>
+      </div>
+
     </div>
 
   </div>
