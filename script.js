@@ -1,18 +1,17 @@
-//vars to define can go here
-let listSearchCities = []
+
 
 //click event listener for search button
 $(".search-btn").on("click", searchCity)
 //optional: only let btn work if there is a city listed
 
-//requesting the city info from OpenWeather API
+//search for a city
 function searchCity(){
 
   //remove welcome card and show city card
     $(".city-card").removeClass("hidden")
     $(".welcome-card").addClass("hidden")
  
-    //clear card
+    //clear forecasts
     removeForecastCards()
 
      let city = $(".search-city").val()
@@ -21,15 +20,15 @@ function searchCity(){
 
      let todayLong = moment().format("LL")
      let today = moment()
+     let listSearchCities = localStorage.getItem("prevCityArray")
 
      //add newly searched city to list for storage
      listSearchCities.push(city)
-
-     //limit the previous search list to 5 cities
-     if (listSearchCities.length > 5){
-       listSearchCities.splice(0)
+     if (listSearchCities.length > 6){
+       listSearchCities.shift()
      }
 
+  //function currentWeater(){
      //present weather request
      $.ajax({
        url: queryURL,
@@ -93,7 +92,7 @@ function searchCity(){
         } //end cityUV ftn
 
      })//end ajax current
-
+    //}//end currentWeather
 
      cityForecast()
 
@@ -158,10 +157,6 @@ function searchCity(){
           }
           console.log("addforecastcards is connected")
         }
-  
-        //icon .weather[0].main = "clouds"
-        //if statement for chosing icon?
-        //Clouds, Rain
     
       }) //end forecast ajax
      } //end cityForecast()  
@@ -176,21 +171,32 @@ function savePreviousCities(){
   for (let k=0; k< listSearchCities.length; k++){
     localStorage.setItem("searchCity"+k, listSearchCities[k])
   }
+  localStorage.setItem("prevCityArray",listSearchCities)
 }
 
+  //clear the text from the search
   $(".search-city").val("")
   console.log("search btn connected")
 }//end search btn
 
 
-listPreviousCities()
-//post the city to the previously searched list aside
-function listPreviousCities(){
-  for (let k=0; k< listSearchCities.length; k++){
-    $(".prev-city"+k).text(localStorage.getItem("searchCity"+k))
-  }
-}
 
 //prev-city search click event...maybe?
 //add event, in function(){
   // set $(".search-city").val($this) or something
+
+rememberCity()
+
+function rememberCity(){
+  //set current city value to most recently searched city
+  $(".search-city").val(localStorage.getItem("searchCity4"))
+
+  listPreviousCities()
+ //post the city to the previously searched list aside
+ function listPreviousCities(){
+  for (let k=0; k < 6; k++){
+    $(".prev-city-"+k).text(localStorage.getItem("searchCity"+k))
+  }
+ }
+}
+
