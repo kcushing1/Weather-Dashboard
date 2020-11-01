@@ -41,16 +41,19 @@
 
         <!--the previous cities searched-->
         <div class="col rounded city-list card border border-info">
-          <div class="card-body prev-city-0"></div>
-          <div class="card-body prev-city-1"></div>
-          <div class="card-body prev-city-2"></div>
-          <div class="card-body prev-city-3"></div>
-          <div class="card-body prev-city-4"></div>
+          <div class="card body">
+            <button id="prevcity5" class="btn prev border border-light rounded" type="button"></button>
+            <button id="prevcity4" class="btn prev border border-light rounded" type="button"></button>
+            <button id="prevcity3" class="btn prev border border-light rounded" type="button"></button>
+            <button id="prevcity2" class="btn prev border border-light rounded" type="button"></button>
+            <button id="prevcity1" class="btn prev border border-light rounded" type="button"></button>
+            <button id="prevcity0" class="btn prev border border-light rounded" type="button"></button>
+        </div>
         </div>
       </aside>
 
     <div class="col-9">
-      <main class="row border border-info city-card rounded hidden">
+      <main class="row border border-info city-card rounded">
         <div class="col">
           <div class="current-city"></div>
           <div class="current-temp"></div>
@@ -62,12 +65,6 @@
 
       <!--the 5 day forecast cards go here-->
       <section class="row card-holder forecast-cards"></section>
-
-      <div class="row card-holder border-info border rounded welcome-card text-center">
-        <div class="card-body">
-          <h4>Search the weather in your favorite city!</h4>
-        </div>
-      </div>
 
     </div>
 
