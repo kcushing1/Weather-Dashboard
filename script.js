@@ -200,25 +200,34 @@ function searchCity(){
        $(".forecast-cards").empty()
      }
 
+     function removeListedCities(){
+       $(".prev").empty()
+     }
+
        //post the city to the previously searched list aside
   function listPreviousCities(){
+    removeListedCities()
     let listSearchCities = JSON.parse(localStorage.getItem("prevSearchCities"))
-    for (let k=listSearchCities.length - 1; k< 0; k--){
+    for (let k=listSearchCities.length - 1; k > 0; k--){
+     //for (let k=0; k < listSearchCities.length; k++){
       //let listedCity = listSearchCities[k]
       //let listedBtn = $("#prevcity"+ k)
-      $("#prevcity"+k).append(listSearchCities[k])
+      console.log('k= ' + k);
+      $("#prevcity" + k).append(listSearchCities[k])
      
-      console.log("prev search appends", listedCity)
+      console.log("prev search appends")
     }
     console.log("listPreviousCities connected")
   }
 
 $(".prev").on("click",function(){
-  let reviewCity = $(this).val()
+  let reviewCity = $(this).text()
   listSearchCities.push(reviewCity)
   if (listSearchCities.length > 6){
     listSearchCities.shift()
   }
+  console.log(reviewCity + "review city");
+  console.log(listSearchCities + "onclick prev")
 
   removeForecastCards()
 
