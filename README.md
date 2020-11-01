@@ -3,11 +3,11 @@ HW #6 - a current and future weather dashboard for searched cities that uses Ope
 
 ## Link to Deployed Site
 
-weblink goes here
+(https://kcushing1.github.io/Weather-Dashboard/)
 
 ## Example of Functionality
 
-gif goes here
+("./assets/weatherdashboard.gif")
 
 ## User Story
 
@@ -37,4 +37,4 @@ THEN I am presented with the last searched city forecast
 
 ## Concepts Learned
 
-what I got out of it goes here
+This assignment tested my comfort using API data. I found that calling the API was easy; getting the correct information onto the screen every time was a little less straightforeward. I found myself writing and deteling for loops a fair amount.

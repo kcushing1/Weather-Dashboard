@@ -1,29 +1,31 @@
 let today = moment()
 let todayLong = moment().format("LL")
-let listSearchCities = JSON.parse(localStorage.getItem("prevSearchCities")) || []
-console.log(listSearchCities)
 
+//get prev searched cities from storage, convert to array
+//if nothing in storage, use empty array
+let listSearchCities = JSON.parse(localStorage.getItem("prevSearchCities")) || []
 
 //click event listener for search button
 $(".search-btn").on("click", searchCity)
 
 //load previous city onto display
 loadPreviousCity()
+removeForecastCards()
 
 function loadPreviousCity(){
   removeForecastCards()
   currentWeather()
   cityForecast()
   listPreviousCities()
-
-  console.log("loadPreviousCity is connected")
 }
 
 //search for a city when the search button is clicked
 function searchCity(){
+  //add the new city to the search city array
   let addCity = $(".search-city").val()
-  console.log(addCity,"addCity")
-  listSearchCities.push(addCity)
+    listSearchCities.push(addCity)
+
+  //keep the cities list max length 6, remove older city
   if (listSearchCities.length > 6){
     listSearchCities.shift()
   }
@@ -35,25 +37,20 @@ function searchCity(){
   currentWeather()
   cityForecast()
   listPreviousCities()
-
-  console.log("search btn and search city connected")
 }
 
   function currentWeather(){
+    //let city be most recently searched city
     let city = listSearchCities[listSearchCities.length-1]
 
     let queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+ city + "&units=imperial&appid=349bd553f59e26c071b517009066832a";
-
-    console.log("currentWeather is connected")
-    console.log(city)
 
      //current city weather request
      $.ajax({
        url: queryURL,
        method: "GET"
      }).then(function(response) {
-       console.log(response);
-
+      //store response pieces as variables
        let results = response.main
        let cityName = response.name
        let cityIcon = response.weather[0].icon
@@ -78,7 +75,7 @@ function searchCity(){
       //need to use fist ajax response to get coords
       //need coords to get UV, can't do by city name
        function cityUV(){
-         console.log("cityUV is connected")
+         //get coordinates for city to use in API
         let cityLat = response.coord.lat
         let cityLon = response.coord.lon
         let ultraVURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + cityLat + "&lon=" + cityLon + "&appid=349bd553f59e26c071b517009066832a"
@@ -87,8 +84,9 @@ function searchCity(){
             url: ultraVURL,
             method: "GET"
           }).then(function(UV) {
-            console.log(UV)
-            uvIndex = UV.value
+             uvIndex = UV.value
+
+             //add UV value and severity color
             $(".current-uv").html(`<p>UV Index: 
             <span class="uv rounded">${uvIndex}<span>
             </p>`)
@@ -109,18 +107,18 @@ function searchCity(){
               }
             }
           })//end UV ajax
-        } //end cityUV ftn
+        } //end cityUV function
 
-     })//end ajax current
+     })//end ajax current city weather
 
      if (listSearchCities.length > 6){
       listSearchCities.shift()
     }
 
-    console.log(listSearchCities,"current, about to store")
+    //store the cities array as a string
     localStorage.setItem("prevSearchCities",JSON.stringify(listSearchCities))
 
-    }//end currentWeather
+    }//end currentWeather function
 
 
     cityForecast()
@@ -131,14 +129,10 @@ function searchCity(){
       let city = listSearchCities[listSearchCities.length-1]
       let forecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city +"&units=imperial&appid=349bd553f59e26c071b517009066832a";
 
-      console.log(city)
-      console.log("cityForecast is connected")
-
       $.ajax({
         url: forecastURL,
         method: "GET"
       }).then(function(future) {
-        console.log(future)
 
         //make array to capture relevent points in API object response
         let futureArray = []
@@ -158,20 +152,22 @@ function searchCity(){
               futureArray.push(i)
             }
           }
-          console.log(futureArray)
-        }
+        }//end getNoontime function
 
         //add the forecast below the present weather
         addForecastCards()
 
         function addForecastCards(){
+          //tomorrow is one day more than today
           let tomorrow = moment().add(1,"day")
 
           //create forecast card for each day
           for (let j=0; j<futureArray.length; j++){
-           //icon
+           //temp
            let displayForecastTemp = future.list[j].main.temp.toFixed(1)
+           //hum.
            let displayForecastHumidity = future.list[j].main.humidity
+           //icon
            let forecastIcon = future.list[j].weather[0].icon
            let forecastIconURL = "http://openweathermap.org/img/wn/"+ forecastIcon +".png"
           
@@ -187,47 +183,46 @@ function searchCity(){
             </div>
            `);
 
-            //add a day to the display date for the next card
+            //add a day to the display date for the next day card
             tomorrow.add(1,"day")
           }
-          console.log("addForecastcards is connected")
-        }
+        }//end addForecastCards function
     
       }) //end forecast ajax
-     } //end cityForecast()  
+     } //end cityForecast function 
      
+     //clear the forcast cards before appending new ones
      function removeForecastCards(){
        $(".forecast-cards").empty()
      }
 
+     //clear the listed cities before appending new ones
      function removeListedCities(){
        $(".prev").empty()
      }
 
-       //post the city to the previously searched list aside
+  //post the city to the previously searched list aside
   function listPreviousCities(){
     removeListedCities()
+
+    //get from storage the cities array
     let listSearchCities = JSON.parse(localStorage.getItem("prevSearchCities"))
-    for (let k=listSearchCities.length - 1; k > 0; k--){
-     //for (let k=0; k < listSearchCities.length; k++){
-      //let listedCity = listSearchCities[k]
-      //let listedBtn = $("#prevcity"+ k)
-      console.log('k= ' + k);
+
+    //list prev cities from array on buttons, decending order
+    for (let k=listSearchCities.length - 1; k >= 0; k--){
       $("#prevcity" + k).append(listSearchCities[k])
-     
-      console.log("prev search appends")
     }
-    console.log("listPreviousCities connected")
   }
 
+  //when prev city button clicked, pull up that city
 $(".prev").on("click",function(){
   let reviewCity = $(this).text()
+
+  //add the city to array, so it can be accessed by other functions
   listSearchCities.push(reviewCity)
   if (listSearchCities.length > 6){
     listSearchCities.shift()
   }
-  console.log(reviewCity + "review city");
-  console.log(listSearchCities + "onclick prev")
 
   removeForecastCards()
 
@@ -235,10 +230,4 @@ $(".prev").on("click",function(){
   currentWeather()
   cityForecast()
   listPreviousCities()
-
-  console.log("onclick prev cities connected")
 })
-
-//prev-city search click event...maybe?
-//add event, in function(){
-  // set $(".search-city").val($this) or something
