@@ -3,11 +3,11 @@ HW #6 - a current and future weather dashboard for searched cities that uses Ope
 
 ## Link to Deployed Site
 
-(https://kcushing1.github.io/Weather-Dashboard/)
+https://kcushing1.github.io/Weather-Dashboard/
 
 ## Example of Functionality
 
-("./assets/weatherdashboard.gif")
+![weather dashboard demo](./assets/weatherdashboard.gif)
 
 ## User Story
 
