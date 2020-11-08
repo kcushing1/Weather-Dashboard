@@ -15,7 +15,6 @@ removeForecastCards()
 function loadPreviousCity(){
   removeForecastCards()
   currentWeather()
-  cityForecast()
   listPreviousCities()
 }
 
@@ -231,3 +230,4 @@ $(".prev").on("click",function(){
   cityForecast()
   listPreviousCities()
 })
+
