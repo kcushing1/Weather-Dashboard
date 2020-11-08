@@ -43,7 +43,7 @@ function searchCity(){
     //let city be most recently searched city
     let city = listSearchCities[listSearchCities.length-1]
 
-    let queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+ city + "&units=imperial&appid=349bd553f59e26c071b517009066832a";
+    let queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+ city + "&units=imperial&appid=349bd553f59e26c071b517009066832a";
 
      //current city weather request
      $.ajax({
@@ -54,7 +54,7 @@ function searchCity(){
        let results = response.main
        let cityName = response.name
        let cityIcon = response.weather[0].icon
-       let cityIconURL = "https://openweathermap.org/img/wn/"+ cityIcon +"@2x.png"
+       let cityIconURL = "http://openweathermap.org/img/wn/"+ cityIcon +"@2x.png"
 
        //add city name as header with date & icon
        $(".current-city").html(`<h3> ${cityName} - ${todayLong} 
@@ -78,7 +78,7 @@ function searchCity(){
          //get coordinates for city to use in API
         let cityLat = response.coord.lat
         let cityLon = response.coord.lon
-        let ultraVURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + cityLat + "&lon=" + cityLon + "&appid=349bd553f59e26c071b517009066832a"
+        let ultraVURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + cityLat + "&lon=" + cityLon + "&appid=349bd553f59e26c071b517009066832a"
   
           $.ajax({
             url: ultraVURL,
@@ -127,7 +127,7 @@ function searchCity(){
      //returns forecast in 3hr increments for 5 days
      function cityForecast(){
       let city = listSearchCities[listSearchCities.length-1]
-      let forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city +"&units=imperial&appid=349bd553f59e26c071b517009066832a";
+      let forecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city +"&units=imperial&appid=349bd553f59e26c071b517009066832a";
 
       $.ajax({
         url: forecastURL,
@@ -169,7 +169,7 @@ function searchCity(){
            let displayForecastHumidity = future.list[j].main.humidity
            //icon
            let forecastIcon = future.list[j].weather[0].icon
-           let forecastIconURL = "https://openweathermap.org/img/wn/"+ forecastIcon +".png"
+           let forecastIconURL = "http://openweathermap.org/img/wn/"+ forecastIcon +".png"
           
            //create the card with title, icon, temp, hum.
            $(".forecast-cards").append(`
