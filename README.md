@@ -9,6 +9,9 @@ https://kcushing1.github.io/Weather-Dashboard/
 
 ![weather dashboard demo](./assets/weatherdashboard.gif)
 
+## Tools Used
+JavaScript. OpenWeather API. HTML/CSS. jQuery. moment.js
+
 ## User Story
 
 ```
